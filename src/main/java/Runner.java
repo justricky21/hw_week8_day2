@@ -1,3 +1,4 @@
+import db.DBFolder;
 import db.DBHelper;
 import models.Extension;
 import models.File;
@@ -38,6 +39,8 @@ public class Runner {
         foundFile.setSize(10);
 
         DBHelper.update(foundFile);
+
+        List<File> foundOldStuff = DBFolder.getFilesFromFolder(oldStuff);
 
         DBHelper.delete(distraction);
     }
