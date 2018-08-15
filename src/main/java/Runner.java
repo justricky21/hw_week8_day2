@@ -1,21 +1,27 @@
+import db.DBFile;
 import db.DBFolder;
 import db.DBHelper;
 import models.Extension;
 import models.File;
 import models.Folder;
+import models.Owner;
 
 import java.util.List;
 
 public class Runner {
 
     public static void main(String[] args) {
-        Folder bookIdea = new Folder("book idea");
+
+        Owner ricardo = new Owner("Ricardo", "ricardo_ruiz");
+        DBHelper.save(ricardo);
+
+        Folder bookIdea = new Folder("book idea", ricardo);
         DBHelper.save(bookIdea);
-        Folder games = new Folder("games");
+        Folder games = new Folder("games",ricardo);
         DBHelper.save(games);
-        Folder oldStuff = new Folder("old stuff");
+        Folder oldStuff = new Folder("old stuff",ricardo);
         DBHelper.save(oldStuff);
-        Folder presentations = new Folder("presentations");
+        Folder presentations = new Folder("presentations",ricardo);
         DBHelper.save(presentations);
 
         File main = new File("main", 10, oldStuff, Extension.RB);
@@ -34,13 +40,15 @@ public class Runner {
 
         List<File> files = DBHelper.getAll(File.class);
         List<Folder> folders = DBHelper.getAll(Folder.class);
+        List<Owner> owners = DBHelper.getAll(Owner.class);
 
         foundFile.setName("test");
         foundFile.setSize(10);
 
         DBHelper.update(foundFile);
 
-        List<File> foundOldStuff = DBFolder.getFilesFromFolder(oldStuff);
+        List<File> foundOldStuff = DBFile.getFilesFromFolder(oldStuff);
+        List<Folder> foundFolders = DBFolder.getFoldersFromOwner(ricardo);
 
         DBHelper.delete(distraction);
     }

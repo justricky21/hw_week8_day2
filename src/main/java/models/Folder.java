@@ -8,13 +8,25 @@ import java.util.List;
 public class Folder {
     private String title;
     private List<File> files;
+    private Owner owner;
     private int id;
 
-    public Folder(String title) {
+    public Folder(String title, Owner owner) {
         this.title = title;
+        this.owner = owner;
     }
 
     public Folder() {
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Column(name = "title")
